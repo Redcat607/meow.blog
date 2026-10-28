@@ -411,6 +411,97 @@
             color: #00FFFF;
         }
 
+        .custom-cursor {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100001;
+            opacity: 0;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .custom-cursor::before,
+        .custom-cursor::after {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            content: "";
+            background: #00FFFF;
+            box-shadow: 0 0 5px #00FFFF, 0 0 8px #FF00FF;
+            transform: translate(-50%, -50%);
+        }
+
+        .custom-cursor::before {
+            width: 12px;
+            height: 2px;
+        }
+
+        .custom-cursor::after {
+            width: 2px;
+            height: 12px;
+        }
+
+        .custom-cursor.visible {
+            opacity: 1;
+        }
+
+        .custom-cursor.hovering::before,
+        .custom-cursor.hovering::after {
+            background: #FF00FF;
+            box-shadow: 0 0 5px #FF00FF, 0 0 8px #00FFFF;
+        }
+
+        .cursor-emojis {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100000;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+        }
+
+        .cursor-sparkle {
+            position: absolute;
+            line-height: 1;
+            pointer-events: none;
+            animation: cursor-sparkle-fade 700ms ease-out forwards;
+            will-change: transform, opacity;
+        }
+
+        @keyframes cursor-sparkle-fade {
+            from {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.7) rotate(0deg);
+            }
+            to {
+                opacity: 0;
+                transform: translate(-50%, -100%) scale(1.25) rotate(70deg);
+            }
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body,
+            body a,
+            body button,
+            body input,
+            body textarea,
+            body [onclick] {
+                cursor: none;
+            }
+
+            .custom-cursor {
+                display: block;
+            }
+
+            .cursor-emojis {
+                display: flex;
+            }
+        }
+
         .webring-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -461,6 +552,8 @@
     </style>
 </head>
 <body>
+    <div id="cursor-emojis" class="cursor-emojis" aria-hidden="true"></div>
+    <div id="custom-cursor" class="custom-cursor" aria-hidden="true"></div>
 
     <div class="chan-nav">
         [ <a href="#/home/" id="nav-home">home</a> / 
@@ -695,6 +788,73 @@
     </div>
 
     <script>
+        const customCursor = document.getElementById('custom-cursor');
+        const cursorEmojis = document.getElementById('cursor-emojis');
+        const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+        if (finePointer.matches) {
+            const sparkleEmojis = ['🌙', '☄️', '🪐', '🌠', '🌌'];
+            let previousX = null;
+            let previousY = null;
+            let distanceSinceSparkle = 0;
+            let lastSparkleTime = 0;
+            let previousEmojiIndex = -1;
+
+            function addCursorSparkle(x, y) {
+                let emojiIndex = Math.floor(Math.random() * sparkleEmojis.length);
+                if (emojiIndex === previousEmojiIndex) {
+                    emojiIndex = (emojiIndex + 1 + Math.floor(Math.random() * (sparkleEmojis.length - 1))) % sparkleEmojis.length;
+                }
+                previousEmojiIndex = emojiIndex;
+
+                const sparkle = document.createElement('span');
+                sparkle.className = 'cursor-sparkle';
+                sparkle.textContent = sparkleEmojis[emojiIndex];
+                sparkle.style.left = `${x}px`;
+                sparkle.style.top = `${y}px`;
+                sparkle.style.fontSize = `${10 + Math.random() * 5}px`;
+                sparkle.addEventListener('animationend', () => sparkle.remove(), { once: true });
+                cursorEmojis.appendChild(sparkle);
+            }
+
+            document.addEventListener('mousemove', event => {
+                customCursor.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
+                customCursor.classList.add('visible');
+
+                if (previousX !== null && previousY !== null) {
+                    const deltaX = event.clientX - previousX;
+                    const deltaY = event.clientY - previousY;
+                    const distance = Math.hypot(deltaX, deltaY);
+                    const spacing = 38;
+                    const now = performance.now();
+                    distanceSinceSparkle = Math.min(distanceSinceSparkle + distance, spacing);
+
+                    if (distanceSinceSparkle >= spacing && now - lastSparkleTime >= 65) {
+                        addCursorSparkle(event.clientX, event.clientY);
+                        distanceSinceSparkle = 0;
+                        lastSparkleTime = now;
+                    }
+                }
+                previousX = event.clientX;
+                previousY = event.clientY;
+            });
+
+            document.addEventListener('mouseover', event => {
+                const isInteractive = event.target instanceof Element && Boolean(event.target.closest('a, button, input, textarea, [onclick]'));
+                customCursor.classList.toggle('hovering', isInteractive);
+            });
+
+            document.addEventListener('mouseout', event => {
+                if (!event.relatedTarget) {
+                    customCursor.classList.remove('visible', 'hovering');
+                    previousX = null;
+                    previousY = null;
+                    distanceSinceSparkle = 0;
+                    lastSparkleTime = 0;
+                }
+            });
+        }
+
         const boardNames = {
             'b': 'Random',
             'r9k': 'Cosas de clase / Personales',
