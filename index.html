@@ -570,6 +570,7 @@
         <div id="index-container">
             <h2 id="board-title" style="text-align: center; margin-bottom: 20px;">~ Todos los Posts ~</h2>
             <ul class="index-list">
+                <li data-board="r9k"><a href="#/r9k/14"><span class="board-tag">/r9k/</span> 14. EL MINUTO DE NATALIA ⏰ (28/10/2026)</a></li>
                 <li data-board="r9k"><a href="#/r9k/13"><span class="board-tag">/r9k/</span> 13.  EL UÑB (28/10/2026)</a></li>
                 <li data-board="r9k"><a href="#/r9k/12"><span class="board-tag">/r9k/</span> 12. EL VUELO DEL TAPÓN DEL BOLI </a></li>
                 <li data-board="an"><a href="#/an/11"><span class="board-tag">/an/</span> 11. MORE FURRY SHIT </a></li>
@@ -587,7 +588,7 @@
         </div>
 
         <div id="guestbook-section" style="display: none;">
-            <h2 style="text-align: center; margin-bottom: 15px;">📖 ~* Libro de Visitas *~ 📖</h2>
+            <h2 style="text-align: center; margin-bottom: 15px;">📖 ~ Libro de Visitas ~ 📖</h2>
             
             <div class="gb-form">
                 <h3 style="color: #FF00FF; margin-top: 0; font-size: 1em;">✍️ Deja tu firma / mensaje:</h3>
@@ -687,6 +688,12 @@
                 <h2>13. EL USB, EL EXAMEN Y EL UÑB 💾🦷</h2>
                 <div class="date">Escrito el 28 de octubre de 2026 en /r9k/</div>
                 <p>En medio del examen, estaba con mi USB y se me ocurre morderlo e intentar desmontarlo. Así me tiro <strong>dos horas</strong>. Después descubro cómo abrirlo y me paso un buen rato abriendo y cerrando. Al rato miro el puerto y veo un bollo entre los dos agujeros. Me giro hacia Natalia y le suelto: <strong>«¡UÑB!»</strong>. Estoy loco...</p>
+            </div>
+
+            <div class="blog-post" id="post-14" data-board="r9k">
+                <h2>14. EL MINUTO DE NATALIA ⏰</h2>
+                <div class="date">Escrito el 28 de octubre de 2026 en /r9k/</div>
+                <p>Yo estaba tranquilamente trabajando en esta web cuando Natalia me pidió, hace 48 horas, que no hiciera nada durante un minuto exacto. Le hice caso y, a las y 25, me largué. Ayer se acordó y me lo dijo... Y HOY, en cuanto mencioné la hora, soltó: <strong>«¿Te acuerdas...? Si mañana me acuerdo, me voy a descojonar»</strong>. Si tú te acuerdas, me da algo xddddd</p>
             </div>
         </div>
 
@@ -998,20 +1005,6 @@
             }
         }
 
-        // Sparkle effect on click
-        document.addEventListener('click', function(e) {
-            const symbols = ['✨', '🐾', '💖', '⭐', '🦴'];
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-            sparkle.style.left = (e.clientX - 10) + 'px';
-            sparkle.style.top = (e.clientY - 10) + 'px';
-            document.body.appendChild(sparkle);
-
-            setTimeout(() => {
-                sparkle.remove();
-            }, 900);
-        });
     </script>
 </body>
 </html>
