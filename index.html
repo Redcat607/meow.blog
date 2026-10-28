@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COMEME los HUEVOS</title>
+    <title>COMEME los HUEVOS - Meow.Blog</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <style>
         /* Estética MySpace / Fotolog 2007 (Emo/Scene Web 2.0) */
         body {
             background-color: #111;
-            background-image:
-                repeating-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000),
+            background-image: 
+                repeating-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000), 
                 repeating-linear-gradient(45deg, #000 25%, #1a1a1a 25%, #1a1a1a 75%, #000 75%, #000);
             background-position: 0 0, 20px 20px;
             background-size: 40px 40px;
@@ -29,7 +29,7 @@
             margin-bottom: 15px;
             color: #888;
         }
-
+        
         .chan-nav a {
             color: #00FFFF;
             text-decoration: none;
@@ -139,7 +139,7 @@
 
         /* Ocultar todos los posts por defecto */
         .blog-post {
-            display: none;
+            display: none; 
             background-color: rgba(0,0,0,0.6);
             border: 1px solid #444;
             border-radius: 8px;
@@ -170,7 +170,7 @@
             font-weight: bold;
             cursor: pointer;
         }
-
+        
         a:hover {
             color: #FF00FF;
             text-decoration: underline;
@@ -231,6 +231,16 @@
             margin: 30px 0;
         }
 
+        .under-construction {
+            text-align: center;
+            background-color: #222;
+            color: #FF00FF;
+            font-weight: bold;
+            padding: 10px;
+            border: 2px dashed #00FFFF;
+            border-radius: 10px;
+        }
+
         /* Estilo simulando un widget flash para el audio */
         .audio-widget {
             background: linear-gradient(to bottom, #444 0%, #222 100%);
@@ -274,23 +284,31 @@
     </div>
 
     <div class="container">
+        
+        <div class="under-construction">
+            <span class="blink"></span><br>
+        </div>
 
-        <h1><span class="spin">💀</span> Meow.Blog <span class="spin">💀</span></h1>
+        <h1><span class="spin">💀</span> Meow.Blog<span class="spin">💀</span></h1>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <img src="https://web.archive.org/web/20091022201309im_/http://geocities.com/Tokyo/4255/undercon.gif" alt="Under Construction">
+        </div>
 
         <div class="marquee-container">
             <marquee behavior="alternate" direction="left" scrollamount="15">
-               COMPRA MI LIBRO
+                COMPRA MI LIBRO 
             </marquee>
         </div>
 
         <div class="audio-widget">
             <h3 class="blink" style="color: #00FFFF; margin-top: 0; font-size: 14px; font-family: Tahoma;">► DALE AL PLAY - HEARTBEAT</h3>
-
+            
             <audio controls autoplay loop>
                 <source src="https://www.image2url.com/r2/default/audio/1793014832072-9e379dda-5e60-417a-82ac-6f5455a1d71f.mp3" type="audio/mpeg">
                 Tu navegador no soporta la etiqueta de audio (¡Actualiza a Netscape 4.0!).
             </audio>
-
+            
             <p style="color: #888; font-size: 10px; margin-bottom: 0; margin-top: 8px;">
                 * Si no suena solo, ¡haz clic en Play! *
             </p>
@@ -301,142 +319,122 @@
         <!-- BOTÓN DE VOLVER -->
         <button id="back-button">⏪ Volver al Board</button>
 
-        <!-- ÍNDICE DE POSTS / BOARDS -->
+        <!-- ÍNDICE DE POSTS / BOARDS (ORDENADOS DEL 1 AL 12) -->
         <div id="index-container">
             <h2 id="board-title" style="text-align: center; margin-bottom: 20px;">~* Todos los Posts *~</h2>
             <ul class="index-list">
                 <!-- r9k -->
-                <li data-board="r9k"><a href="#/r9k/1"><span class="board-tag">/r9k/</span> 1. NATALIA NO SE CALLA 🗣️ (14/11/1999)</a></li>
+                <li data-board="r9k"><a href="#/r9k/1"><span class="board-tag">/r9k/</span> 1. NATALIA NO SE CALLA 🗣️ (14/09/2007)</a></li>
                 <!-- b -->
-                <li data-board="b"><a href="#/b/2"><span class="board-tag">/b/</span> 2. EL EMOJI DEL TUBÉRCULO COMESTIBLE 🥔🍠 (12/11/1999)</a></li>
-                <!-- r9k -->
-                <li data-board="r9k"><a href="#/r9k/13"><span class="board-tag">/r9k/</span> 13. ¡PASO! (El gesto diagonal) ✋↘️ (08/11/1999)</a></li>
+                <li data-board="b"><a href="#/b/2"><span class="board-tag">/b/</span> 2. EL EMOJI DEL TUBÉRCULO COMESTIBLE 🥔🍠 (18/09/2007)</a></li>
                 <!-- an -->
-                <li data-board="an"><a href="#/an/3"><span class="board-tag">/an/</span> 3. LA TRAGEDIA DE LA AVISPA (APLOF) 🐝💥 (05/11/1999)</a></li>
+                <li data-board="an"><a href="#/an/3"><span class="board-tag">/an/</span> 3. LA TRAGEDIA DE LA AVISPA (APLOF) 🐝💥 (22/09/2007)</a></li>
                 <!-- r9k -->
-                <li data-board="r9k"><a href="#/r9k/4"><span class="board-tag">/r9k/</span> 4. ¡ARRIBA! (En la parra total) 🙄 (01/11/1999)</a></li>
+                <li data-board="r9k"><a href="#/r9k/4"><span class="board-tag">/r9k/</span> 4. ¡ARRIBA! (En la parra total) 🙄 (26/09/2007)</a></li>
                 <!-- an -->
-                <li data-board="an"><a href="#/an/5"><span class="board-tag">/an/</span> 5. MIAU Y GUAU🐾 (28/10/1999)</a></li>
+                <li data-board="an"><a href="#/an/5"><span class="board-tag">/an/</span> 5. MIAU Y GUAU🐾 (02/10/2007)</a></li>
                 <!-- r9k -->
-                <li data-board="r9k"><a href="#/r9k/14"><span class="board-tag">/r9k/</span> 14. EL ARCHIVADOR: ¡PLA! 📁💥 (25/10/1999)</a></li>
-                <!-- r9k -->
-                <li data-board="r9k"><a href="#/r9k/6"><span class="board-tag">/r9k/</span> 6. LAS UÑAS (El pulso de rata fría) 💅🐀 (22/10/1999)</a></li>
+                <li data-board="r9k"><a href="#/r9k/6"><span class="board-tag">/r9k/</span> 6. LAS UÑAS (El pulso de rata fría) 💅🐀 (08/10/2007)</a></li>
                 <!-- b -->
-                <li data-board="b"><a href="#/b/7"><span class="board-tag">/b/</span> 7. LA PUERTA CRUJE Y... PINTURA 🚪🎨 (15/10/1999)</a></li>
+                <li data-board="b"><a href="#/b/7"><span class="board-tag">/b/</span> 7. LA PUERTA CRUJE Y... PINTURA 🚪🎨 (15/10/2007)</a></li>
                 <!-- an -->
-                <li data-board="an"><a href="#/an/8"><span class="board-tag">/an/</span> 8. ORCA MEOW 🐋🐱 (10/10/1999)</a></li>
+                <li data-board="an"><a href="#/an/8"><span class="board-tag">/an/</span> 8. ORCA MEOW 🐋🐱 (21/10/2007)</a></li>
                 <!-- soc -->
-                <li data-board="soc"><a href="#/soc/9"><span class="board-tag">/soc/</span> 9. TIRITIRITIRI 📞 (03/10/1999)</a></li>
+                <li data-board="soc"><a href="#/soc/9"><span class="board-tag">/soc/</span> 9. TIRITIRITIRI 📞 (28/10/2007)</a></li>
                 <!-- mu -->
-                <li data-board="mu"><a href="#/mu/10"><span class="board-tag">/mu/</span> 10. HEARTBEAT 💔🎵 (28/09/1999)</a></li>
+                <li data-board="mu"><a href="#/mu/10"><span class="board-tag">/mu/</span> 10. HEARTBEAT 💔🎵 (05/11/2007)</a></li>
                 <!-- an -->
-                <li data-board="an"><a href="#/an/11"><span class="board-tag">/an/</span> 11. MORE FURRY SHIT 🦊🐺 (20/09/1999)</a></li>
+                <li data-board="an"><a href="#/an/11"><span class="board-tag">/an/</span> 11. MORE FURRY SHIT 🦊🐺 (10/11/2007)</a></li>
                 <!-- r9k -->
-                <li data-board="r9k"><a href="#/r9k/12"><span class="board-tag">/r9k/</span> 12. EL VUELO DEL TAPÓN DEL BOLI 🖊️🚀 (12/09/1999)</a></li>
+                <li data-board="r9k"><a href="#/r9k/12"><span class="board-tag">/r9k/</span> 12. EL VUELO DEL TAPÓN DEL BOLI 🖊️🚀 (15/11/2007)</a></li>
             </ul>
         </div>
 
-        <!-- CONTENEDOR DE POSTS -->
+        <!-- CONTENEDOR DE POSTS (ORDENADOS DEL 1 AL 12) -->
         <div id="posts-container">
             <!-- /r9k/ -->
             <div class="blog-post" id="post-1" data-board="r9k">
                 <h2>1. NATALIA NO SE CALLA 🗣️</h2>
-                <div class="date">Escrito el 14 de Noviembre de 1999 en /r9k/</div>
+                <div class="date">Escrito el 14 de Septiembre de 2007 en /r9k/</div>
                 <p>De verdad os lo digo, es físicamente imposible. Natalia tiene un motor en la mandíbula o algo. Empieza a hablar en la primera hora y cuando toca el timbre del recreo SIGUE HABLANDO. <span class="blink" style="color: #FF00FF;">¡QUE ALGUIEN LE DÉ AL BOTÓN DE MUTE POR FAVOR!</span> xDDDD</p>
             </div>
 
             <!-- /b/ -->
             <div class="blog-post" id="post-2" data-board="b">
                 <h2>2. EL EMOJI DEL TUBÉRCULO COMESTIBLE 🥔🍠</h2>
-                <div class="date">Escrito el 12 de Noviembre de 1999 en /b/</div>
+                <div class="date">Escrito el 18 de Septiembre de 2007 en /b/</div>
                 <p>Aún no sé cómo llegamos a esto, pero el emoji del tubérculo es sagrado. ¿Es una patata? ¿Es un boniato? ¡NO IMPORTA! Es nuestro dios ahora. Alabado sea el tubérculo comestible. 🥔🛐</p>
-            </div>
-
-            <!-- /r9k/ - POST NUEVO: PASO -->
-            <div class="blog-post" id="post-13" data-board="r9k">
-                <h2>13. ¡PASO! (El gesto diagonal) ✋↘️</h2>
-                <div class="date">Escrito el 08 de Noviembre de 1999 en /r9k/</div>
-                <p>Estábamos estudiando y de repente Natalia, en medio de la explicación, cruza el brazo derecho en diagonal justo enfrente de la pantalla diciendo: <span class="blink" style="color: #00FFFF; font-size: 1.3em;">«¡PASO!»</span>. <br><br>
-                Fue tan seco y perfecto que me dio un ataque de risa. Ahora cada vez que algo no nos apetece o hay un tema insoportable, solo hay que mover la mano en diagonal. PASO ABSOLUTO. ✋↘️</p>
             </div>
 
             <!-- /an/ -->
             <div class="blog-post" id="post-3" data-board="an">
                 <h2>3. LA TRAGEDIA DE LA AVISPA (APLOF) 🐝💥</h2>
-                <div class="date">Escrito el 05 de Noviembre de 1999 en /an/</div>
+                <div class="date">Escrito el 22 de Septiembre de 2007 en /an/</div>
                 <p>Estaba la pobre avispa en la ventana. Todos pensábamos: "¡Vuela libre, pequeña! ¡Alcanza el cielo!". Empezó a mover las alas con furia, se preparó para el despegue y de repente, en vez de subir... fue directa al suelo. <br><br>
-                <span style="color: #FF00FF; font-size: 2em; font-weight: bold;">APLOF.</span><br><br>
+                <span style="color: #FF00FF; font-size: 2em; font-weight: bold;">APLOF.</span><br><br> 
                 Aún me río solo de acordarme. RIP Avispa, no eras la más lista del panal.</p>
             </div>
 
             <!-- /r9k/ -->
             <div class="blog-post" id="post-4" data-board="r9k">
                 <h2>4. ¡ARRIBA! (En la parra total) 🙄</h2>
-                <div class="date">Escrito el 01 de Noviembre de 1999 en /r9k/</div>
+                <div class="date">Escrito el 26 de Septiembre de 2007 en /r9k/</div>
                 <p>Estábamos en clase de informática. La seño dice: "Mirad <strong>arriba</strong> en el Word" (para el menú de herramientas). Mi compañera me mira y yo... YO ESTABA MIRANDO LITERALMENTE AL TECHO DE LA CLASE. Estaba en la inopia. En modo APLOF total. Tierra trágame.</p>
             </div>
 
             <!-- /an/ -->
             <div class="blog-post" id="post-5" data-board="an">
                 <h2>5. MIAU Y GUAU🐾</h2>
-                <div class="date">Escrito el 28 de Octubre de 1999 en /an/</div>
+                <div class="date">Escrito el 2 de Octubre de 2007 en /an/</div>
                 <p>Ya no digo "Wow". Ahora todo es "Miau". La Natalia, una vez se le ocurrio decir WOW, pero yo el mas igneioso del mundo voy y le respondo MEOW, (Ella a la primera no lo pillo). EN CUANTO SE DIO CUENTA SE EMPEZO A DESCOGONAR... <span class="blink" style="color: #00FFFF;">MEOW</span> (Natalia sigue sin callarse)</p>
-            </div>
-
-            <!-- /r9k/ - POST NUEVO: ARCHIVADOR -->
-            <div class="blog-post" id="post-14" data-board="r9k">
-                <h2>14. EL ARCHIVADOR: ¡PLA! 📁💥</h2>
-                <div class="date">Escrito el 25 de Octubre de 1999 en /r9k/</div>
-                <p>Uno de los primeros días Natalia vino a enseñarme su archivador. Hasta ahí todo normal, ¿no? Pues va y para cerrarlo/enseñármelo mete un golpe exagradísimo y seco: <span style="color: #FF00FF; font-size: 1.8em; font-weight: bold;">¡PLA!</span> 💥<br><br>
-                Suena literalmente a plan muerto. Cada vez que ese archivador se cierra, fallece una idea. Es el sonido del colapso absoluto. ¡PLA!</p>
             </div>
 
             <!-- /r9k/ -->
             <div class="blog-post" id="post-6" data-board="r9k">
                 <h2>6. LAS UÑAS (El pulso de rata fría) 💅🐀</h2>
-                <div class="date">Escrito el 22 de Octubre de 1999 en /r9k/</div>
+                <div class="date">Escrito el 8 de Octubre de 2007 en /r9k/</div>
                 <p>Contexto: Me he pintado las uñas de negro por PRIMERA VEZ. El problema es que tengo el pulso de una <em>rata fría</em> 🥶. Literalmente temblaba. Parecía que me había pintado con alquitrán. Y por supuesto... NATALIA SE RÍE DE MÍ. (Aunque no ha parado de hablar mientras se reía, obvio).</p>
             </div>
 
             <!-- /b/ -->
             <div class="blog-post" id="post-7" data-board="b">
                 <h2>7. LA PUERTA CRUJE Y... PINTURA 🚪🎨</h2>
-                <div class="date">Escrito el 15 de Octubre de 1999 en /b/</div>
+                <div class="date">Escrito el 15 de Octubre de 2007 en /b/</div>
                 <p>Silencio tenso... de repente la puerta hace *CRRRRJJJ* y alguien grita PINTURA. No trates de entenderlo, si estuviste allí, lo sabes. El surrealismo nos persigue.</p>
             </div>
 
             <!-- /an/ -->
             <div class="blog-post" id="post-8" data-board="an">
                 <h2>8. ORCA MEOW 🐋🐱</h2>
-                <div class="date">Escrito el 10 de Octubre de 1999 en /an/</div>
+                <div class="date">Escrito el 21 de Octubre de 2007 en /an/</div>
                 <p>La evolución definitiva. Ni perro, ni gato, ni delfín. <strong>ORCA MEOW.</strong> Es un concepto, es un estilo de vida. (Sí, estamos perdiendo la cabeza). O.O</p>
             </div>
 
             <!-- /soc/ -->
             <div class="blog-post" id="post-9" data-board="soc">
                 <h2>9. TIRITIRITIRI 📞</h2>
-                <div class="date">Escrito el 03 de Octubre de 1999 en /soc/</div>
+                <div class="date">Escrito el 28 de Octubre de 2007 en /soc/</div>
                 <p>¿Sabes el mítico anuncio de Línea Directa? Pues un día me acerqué a la oreja de Natalia, completamente de la nada y le susurré: <span class="blink" style="color: cyan; font-size: 1.5em;">TIRITIRITIRI</span>. Se ha quedado como la broma interna más legendaria. Ahora la uso para interrumpirla cuando no se calla (spoiler: no funciona).</p>
             </div>
 
             <!-- /mu/ -->
             <div class="blog-post" id="post-10" data-board="mu">
                 <h2>10. HEARTBEAT 💔🎵</h2>
-                <div class="date">Escrito el 28 de Septiembre de 1999 en /mu/</div>
-                <p>Le pegué fuertísimo la canción de <em>Heartbeat</em> de Childish Gambino. Ahora es nuestro himno. Suena en mi cabeza 24/7. (Mentira, no sonaba en los 90s, ¡pero viaja en el tiempo con nosotros!).</p>
+                <div class="date">Escrito el 5 de Noviembre de 2007 en /mu/</div>
+                <p>Le pegué fuertísimo la canción de <em>Heartbeat</em> de Childish Gambino. Ahora es nuestro himno. Suena en mi cabeza 24/7. (Mentira, ¡pero viaja en el tiempo con nosotros!).</p>
             </div>
 
             <!-- /an/ -->
             <div class="blog-post" id="post-11" data-board="an">
                 <h2>11. MORE FURRY SHIT 🦊🐺</h2>
-                <div class="date">Escrito el 20 de Septiembre de 1999 en /an/</div>
+                <div class="date">Escrito el 10 de Noviembre de 2007 en /an/</div>
                 <p>Solo voy a decir esto: MORE. FURRY. SHIT. La madriguera del conejo (o del michu) es muy profunda. ¡Que el espíritu animal nos guíe!</p>
             </div>
 
             <!-- /r9k/ -->
             <div class="blog-post" id="post-12" data-board="r9k">
                 <h2>12. EL VUELO DEL TAPÓN DEL BOLI 🖊️🚀</h2>
-                <div class="date">Escrito el 12 de Septiembre de 1999 en /r9k/</div>
+                <div class="date">Escrito el 15 de Noviembre de 2007 en /r9k/</div>
                 <p>Examen importantísimo. Silencio sepulcral. Tensión. De repente, aprieto demasiado el boli y... <strong>¡FIIIIIIUUUUUU!</strong> EL TAPÓN SALIÓ VOLANDO POR TODA LA CLASE. Cruzó el cielo como un meteorito de plástico. La cara del profesor fue un poema. ¡¡VOLÓ!!</p>
             </div>
         </div>
@@ -454,7 +452,7 @@
         </div>
 
     </div>
-
+    
     <!-- MENÚ INFERIOR 4CHAN -->
     <div class="chan-nav" style="margin-top: 20px;">
         [ <a href="#/home/">home</a> / <a href="#/b/">b</a> / <a href="#/r9k/">r9k</a> / <a href="#/an/">an</a> / <a href="#/mu/">mu</a> / <a href="#/soc/">soc</a> ]
@@ -474,14 +472,14 @@
             // Obtenemos el hash sin el '#' inicial. Ej: /b/ o /b/2
             const hash = window.location.hash.substring(1) || '/home/';
             const parts = hash.split('/').filter(Boolean);
-
+            
             // Ocultamos todo por defecto
             document.getElementById('index-container').style.display = 'none';
             document.getElementById('back-button').style.display = 'none';
-
+            
             const allPosts = document.querySelectorAll('.blog-post');
             allPosts.forEach(post => post.style.display = 'none');
-
+            
             const allListItems = document.querySelectorAll('.index-list li');
             allListItems.forEach(li => li.style.display = 'none');
 
@@ -491,13 +489,13 @@
                 document.getElementById('index-container').style.display = 'block';
                 document.getElementById('board-title').innerText = '~* Todos los Posts *~';
                 allListItems.forEach(li => li.style.display = 'block');
-            }
+            } 
             else if (parts.length === 1 && boardNames[parts[0]]) {
                 // VISTA BOARD INDEX (Ej: /b/): Muestra índice filtrado
                 const board = parts[0];
                 document.getElementById('index-container').style.display = 'block';
                 document.getElementById('board-title').innerText = `~* /${board}/ - ${boardNames[board]} *~`;
-
+                
                 allListItems.forEach(li => {
                     if (li.getAttribute('data-board') === board) {
                         li.style.display = 'block';
@@ -509,16 +507,16 @@
                 const board = parts[0];
                 const postId = parts[1];
                 const post = document.getElementById('post-' + postId);
-
+                
                 if (post) {
                     post.style.display = 'block';
-
+                    
                     // Configurar el botón de volver para ir al board padre
                     const backBtn = document.getElementById('back-button');
                     backBtn.innerText = `⏪ Volver a /${board}/`;
                     backBtn.onclick = () => { window.location.hash = `/${board}/`; };
                     backBtn.style.display = 'block';
-
+                    
                     window.scrollTo({ top: 250, behavior: 'smooth' });
                 } else {
                     // Si el post no existe, ir a home
@@ -557,18 +555,18 @@
 
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
-
+            
             // Símbolos Emo/Scene obligatorios
             const symbols = ['★', '🖤', '☆', 'x', '♥'];
             const colors = ['#FF00FF', '#000000']; // Solo fucsia y negro
-
+            
             const randomType = Math.floor(Math.random() * symbols.length);
             sparkle.textContent = symbols[randomType];
             sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
-
+            
             sparkle.style.left = (e.clientX - 10 + Math.random() * 20) + 'px';
             sparkle.style.top = (e.clientY - 10 + Math.random() * 20) + 'px';
-
+            
             document.body.appendChild(sparkle);
 
             // Destruir tras 1 segundo exacto
@@ -591,7 +589,7 @@
                     ultimaModificacion = modificacionActual;
                 })
                 .catch(() => {}); // Ignora errores temporales
-        }, 3000);
+        }, 3000); 
 
     </script>
 </body>
