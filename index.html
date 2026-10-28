@@ -235,17 +235,6 @@
             margin: 25px 0;
         }
 
-        .under-construction {
-            text-align: center;
-            background-color: #1a1a1a;
-            color: #FF00FF;
-            font-weight: bold;
-            padding: 10px;
-            border: 2px dashed #00FFFF;
-            border-radius: 10px;
-            font-size: 0.9em;
-        }
-
         .audio-widget {
             background: linear-gradient(to bottom, #333 0%, #111 100%);
             border: 2px solid #FF00FF;
@@ -548,18 +537,7 @@
 
     <div class="container">
         
-        <div class="under-construction">
-            <span class="blink">Meow.blog</span>
-        </div>
-
         <h1><span class="spin">💀</span> Meow.Blog <span class="spin">💀</span></h1>
-
-        <div style="text-align: center; margin: 15px 0;">
-            <svg width="220" height="30" viewBox="0 0 220 30" style="vertical-align: middle;">
-                <rect width="220" height="30" fill="#222" rx="5" stroke="#FF00FF" stroke-width="2"/>
-                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#00FFFF" font-family="Courier New" font-weight="bold" font-size="12">⚠️ UNDER CONSTRUCTION ⚠️</text>
-            </svg>
-        </div>
 
         <div class="marquee-container">
             <marquee behavior="alternate" direction="left" scrollamount="12">
@@ -852,7 +830,7 @@
 
             if (parts.length === 0 || parts[0] === 'home') {
                 indexContainer.style.display = 'block';
-                document.getElementById('board-title').innerText = '~* Todos los Posts *~';
+                document.getElementById('board-title').innerText = '~ Todos los Posts ~';
                 allListItems.forEach(li => li.style.display = 'block');
                 document.querySelectorAll('#nav-home').forEach(el => el.classList.add('active-link'));
             } 
