@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COMEME los HUEVOS - Meow.Blog</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <title>COMEME los HUEVOS - Meow.Blog (2026)</title>
+    <link rel="shortcut icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAEAAAAAEAIAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" type="image/x-icon">
     <style>
-        /* Estética MySpace / Fotolog 2007 (Emo/Scene Web 2.0) */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #111;
             background-image: 
@@ -17,17 +20,21 @@
             color: #d9d9d9;
             font-family: Tahoma, Verdana, sans-serif;
             margin: 0;
-            padding: 10px 20px 20px 20px;
+            padding: 10px 15px 30px 15px;
             cursor: crosshair;
+            overflow-x: hidden;
         }
 
-        /* Menú estilo 4chan */
         .chan-nav {
             font-family: 'Courier New', Courier, monospace;
             font-size: 14px;
             text-align: center;
             margin-bottom: 15px;
             color: #888;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #333;
         }
         
         .chan-nav a {
@@ -37,28 +44,31 @@
             font-weight: normal;
         }
 
-        .chan-nav a:hover {
+        .chan-nav a:hover, .chan-nav a.active-link {
             color: #FF00FF;
             text-shadow: 0 0 5px #FF00FF;
             text-decoration: underline;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 820px;
             margin: 0 auto;
-            background-color: rgba(20, 20, 20, 0.9);
-            border: 3px dotted #FF00FF; /* Rosa fucsia MySpace */
+            background-color: rgba(20, 20, 20, 0.94);
+            border: 3px dotted #FF00FF;
             border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0px 0px 20px #00FFFF; /* Brillo cian */
+            padding: 25px;
+            box-shadow: 0px 0px 20px #00FFFF;
+            position: relative;
         }
 
         h1 {
             color: #ffffff;
             text-align: center;
-            text-shadow: 0px 0px 10px #FF00FF, 0px 0px 20px #FF00FF;
+            text-shadow: 0px 0px 10px #FF00FF, 0px 0px 20px #FF00FF, 0px 0px 30px #00FFFF;
             font-size: 2.8em;
             font-weight: normal;
+            margin: 15px 0;
+            letter-spacing: 2px;
         }
 
         h2 {
@@ -68,6 +78,7 @@
             border: 2px dashed #FF00FF;
             font-size: 1.2em;
             margin-top: 0;
+            border-radius: 6px;
         }
 
         .blink {
@@ -76,29 +87,38 @@
             font-weight: bold;
         }
         @keyframes blinker {
-            50% { opacity: 0.3; }
+            50% { opacity: 0.2; }
         }
 
         .spin {
             display: inline-block;
+            animation: spinAnim 4s linear infinite;
+        }
+
+        @keyframes spinAnim {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .marquee-container {
             background-color: #111;
             color: #FF00FF;
             font-family: 'Courier New', Courier, monospace;
-            padding: 10px;
+            padding: 8px;
             border: 2px dashed #00FFFF;
             margin-bottom: 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            box-shadow: inset 0 0 5px #00FFFF;
         }
 
-        /* Estilos del Índice / Lista de Posts */
-        #index-container {
-            background-color: rgba(0,0,0,0.7);
+        #index-container, #guestbook-section {
+            background-color: rgba(0,0,0,0.75);
             border: 1px solid #444;
             border-radius: 8px;
             padding: 20px;
             box-shadow: inset 0 0 10px #000;
+            margin-bottom: 20px;
         }
 
         .index-list {
@@ -112,17 +132,19 @@
             padding: 10px;
             border-bottom: 1px dotted #FF00FF;
             background: #1a1a1a;
-            transition: all 0.3s;
+            border-radius: 5px;
+            transition: all 0.25s ease-in-out;
         }
 
         .index-list li:hover {
             background: #2a2a2a;
             padding-left: 20px;
             border-left: 5px solid #00FFFF;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
         }
 
         .index-list a {
-            font-size: 1.2em;
+            font-size: 1.1em;
             display: block;
         }
 
@@ -137,27 +159,26 @@
             border: 1px solid #FF00FF;
         }
 
-        /* Ocultar todos los posts por defecto */
         .blog-post {
             display: none; 
-            background-color: rgba(0,0,0,0.6);
+            background-color: rgba(0,0,0,0.8);
             border: 1px solid #444;
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: inset 0 0 10px #000;
+            box-shadow: inset 0 0 10px #000, 0 0 10px rgba(255, 0, 255, 0.2);
             min-height: 150px;
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.4s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(-5deg); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .date {
             color: #FF00FF;
-            font-size: 0.8em;
+            font-size: 0.85em;
             border-bottom: 1px dotted #555;
             padding-bottom: 5px;
             margin-bottom: 15px;
@@ -176,19 +197,18 @@
             text-decoration: underline;
         }
 
-        /* Botón de volver súper Web 2.0 */
         #back-button {
             display: none;
             background: linear-gradient(to bottom, #444, #111);
             color: #00FFFF;
             border: 2px solid #FF00FF;
-            padding: 12px 25px;
+            padding: 10px 22px;
             font-family: Tahoma, sans-serif;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1em;
             border-radius: 20px;
             cursor: pointer;
-            margin: 0 auto 25px auto;
+            margin: 0 auto 20px auto;
             text-shadow: 0 0 5px #00FFFF;
             box-shadow: 0 0 15px #FF00FF;
             transition: all 0.2s;
@@ -203,238 +223,423 @@
             text-shadow: 0 0 5px #000;
         }
 
-        .hit-counter {
-            text-align: center;
-            margin-top: 20px;
-            font-family: 'Courier New', monospace;
-            background: #000;
-            color: #FF00FF;
+        .hit-counter-wrapper {
             display: inline-block;
-            padding: 10px 20px;
+            background: #000;
+            padding: 8px 15px;
             border: 3px inset #555;
-            border-radius: 5px;
-            font-size: 1.8em;
+            border-radius: 8px;
+            box-shadow: 0 0 12px #00FFFF, inset 0 0 8px #FF00FF;
+            margin-top: 10px;
+        }
+
+        .hit-counter {
+            font-family: 'Courier New', monospace;
+            color: #00FFFF;
+            font-size: 2em;
             font-weight: bold;
-            box-shadow: 0 0 10px #00FFFF;
-            letter-spacing: 5px;
+            letter-spacing: 6px;
+            text-shadow: 0 0 8px #00FFFF, 0 0 15px #FF00FF;
         }
 
         .footer-center {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 25px;
         }
 
         hr {
             border: 0;
-            height: 1px;
+            height: 2px;
             background: linear-gradient(to right, transparent, #FF00FF, #00FFFF, transparent);
-            margin: 30px 0;
+            margin: 25px 0;
         }
 
         .under-construction {
             text-align: center;
-            background-color: #222;
+            background-color: #1a1a1a;
             color: #FF00FF;
             font-weight: bold;
             padding: 10px;
             border: 2px dashed #00FFFF;
             border-radius: 10px;
+            font-size: 0.9em;
         }
 
-        /* Estilo simulando un widget flash para el audio */
         .audio-widget {
-            background: linear-gradient(to bottom, #444 0%, #222 100%);
-            border: 2px solid #111;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.8);
-            border-radius: 5px;
-            padding: 15px;
-            width: 320px;
+            background: linear-gradient(to bottom, #333 0%, #111 100%);
+            border: 2px solid #FF00FF;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+            border-radius: 8px;
+            padding: 12px 18px;
+            width: 340px;
             max-width: 100%;
-            margin: 20px auto;
+            margin: 15px auto 25px auto;
             text-align: center;
         }
 
-        .audio-widget audio {
-            width: 100%;
-            height: 30px;
-            border-radius: 0;
-            outline: none;
+        .custom-audio-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
         }
 
-        /* CSS PARA EL CURSOR EMO BLINGEE */
+        .btn-retro {
+            background: linear-gradient(to bottom, #FF00FF, #880088);
+            color: #fff;
+            border: 1px solid #00FFFF;
+            padding: 5px 12px;
+            font-weight: bold;
+            font-size: 0.85em;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 0 5px #00FFFF;
+        }
+
+        .btn-retro:hover {
+            background: linear-gradient(to bottom, #00FFFF, #008888);
+            color: #000;
+            box-shadow: 0 0 8px #FF00FF;
+        }
+
         .sparkle {
             position: fixed;
             pointer-events: none;
             z-index: 99999;
-            font-size: 1.5em;
+            font-size: 1.3em;
             text-shadow: 0 0 5px #FF00FF;
-            animation: fallAndFade 1s linear forwards;
+            animation: fallAndFade 0.9s linear forwards;
         }
         @keyframes fallAndFade {
             0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(40px) scale(0.5) rotate(90deg); opacity: 0; }
+            100% { transform: translateY(35px) scale(0.4) rotate(120deg); opacity: 0; }
+        }
+
+        .gb-form {
+            background: rgba(25, 25, 25, 0.9);
+            border: 2px dashed #FF00FF;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .gb-form label {
+            display: block;
+            color: #00FFFF;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .gb-form input, .gb-form textarea {
+            width: 100%;
+            background: #000;
+            border: 1px solid #00FFFF;
+            color: #fff;
+            padding: 8px;
+            font-family: Tahoma, sans-serif;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            outline: none;
+        }
+
+        .gb-form input:focus, .gb-form textarea:focus {
+            border-color: #FF00FF;
+            box-shadow: 0 0 8px #FF00FF;
+        }
+
+        .gb-entry {
+            background: #151515;
+            border-left: 4px solid #FF00FF;
+            border-bottom: 1px solid #333;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .gb-entry-header {
+            display: flex;
+            justify-content: space-between;
+            color: #00FFFF;
+            font-size: 0.85em;
+            margin-bottom: 6px;
+            border-bottom: 1px dotted #444;
+            padding-bottom: 4px;
+        }
+
+        .gb-entry-author {
+            font-weight: bold;
+            color: #FF00FF;
+        }
+
+        .gb-entry-body {
+            font-size: 0.95em;
+            line-height: 1.4;
+            color: #eee;
+            word-break: break-word;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #111;
+            border: 3px solid #00FFFF;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 25px #FF00FF;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #FF00FF;
+            font-size: 1.5em;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-close:hover {
+            color: #00FFFF;
+        }
+
+        .webring-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .webring-item {
+            background: #222;
+            border: 1px dashed #FF00FF;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+
+        .webring-item:hover {
+            border-color: #00FFFF;
+            transform: scale(1.03);
+            background: #2a2a2a;
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .badge-btn {
+            background: #000;
+            border: 1px solid #555;
+            color: #00FFFF;
+            font-size: 9px;
+            padding: 4px 6px;
+            font-family: monospace;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
+
+        .empty-gb {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+            padding: 15px;
         }
     </style>
 </head>
 <body>
 
-    <!-- MENÚ SUPERIOR 4CHAN -->
     <div class="chan-nav">
-        [ <a href="#/home/">home</a> / <a href="#/b/">b</a> / <a href="#/r9k/">r9k</a> / <a href="#/an/">an</a> / <a href="#/mu/">mu</a> / <a href="#/soc/">soc</a> ]
+        [ <a href="#/home/" id="nav-home">home</a> / 
+          <a href="#/b/" id="nav-b">b</a> / 
+          <a href="#/r9k/" id="nav-r9k">r9k</a> / 
+          <a href="#/an/" id="nav-an">an</a> / 
+          <a href="#/mu/" id="nav-mu">mu</a> / 
+          <a href="#/soc/" id="nav-soc">soc</a> / 
+          <a href="#/guestbook/" id="nav-guestbook" style="color: #FF00FF;">Libro de Visitas</a> ]
     </div>
 
     <div class="container">
         
         <div class="under-construction">
-            <span class="blink"></span><br>
+            <span class="blink">Meow.blog</span>
         </div>
 
-        <h1><span class="spin">💀</span> Meow.Blog<span class="spin">💀</span></h1>
+        <h1><span class="spin">💀</span> Meow.Blog <span class="spin">💀</span></h1>
 
-        <div style="text-align: center; margin: 20px 0;">
-            <img src="https://web.archive.org/web/20091022201309im_/http://geocities.com/Tokyo/4255/undercon.gif" alt="Under Construction">
+        <div style="text-align: center; margin: 15px 0;">
+            <svg width="220" height="30" viewBox="0 0 220 30" style="vertical-align: middle;">
+                <rect width="220" height="30" fill="#222" rx="5" stroke="#FF00FF" stroke-width="2"/>
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#00FFFF" font-family="Courier New" font-weight="bold" font-size="12">⚠️ UNDER CONSTRUCTION ⚠️</text>
+            </svg>
         </div>
 
         <div class="marquee-container">
-            <marquee behavior="alternate" direction="left" scrollamount="15">
-                COMPRA MI LIBRO 
+            <marquee behavior="alternate" direction="left" scrollamount="12">
+                ★ COMPRA MI LIBRO ★ AGREGAME A MYSPACE ★ FIRMA EL LIBRO DE VISITAS ★ MEOW MEOW MEOW ★
             </marquee>
         </div>
 
         <div class="audio-widget">
-            <h3 class="blink" style="color: #00FFFF; margin-top: 0; font-size: 14px; font-family: Tahoma;">► DALE AL PLAY - HEARTBEAT</h3>
+            <h3 class="blink" style="color: #00FFFF; margin-top: 0; font-size: 13px; font-family: Tahoma;">► DALE AL PLAY - HEARTBEAT</h3>
             
-            <audio controls autoplay loop>
+            <audio id="bg-audio" loop>
                 <source src="https://www.image2url.com/r2/default/audio/1793014832072-9e379dda-5e60-417a-82ac-6f5455a1d71f.mp3" type="audio/mpeg">
-                Tu navegador no soporta la etiqueta de audio (¡Actualiza a Netscape 4.0!).
+                Tu navegador no soporta la etiqueta de audio.
             </audio>
+
+            <div class="custom-audio-controls">
+                <button class="btn-retro" onclick="toggleAudio()" id="audio-toggle-btn">▶ PLAY</button>
+                <button class="btn-retro" onclick="restartAudio()">↺ RESTART</button>
+            </div>
             
-            <p style="color: #888; font-size: 10px; margin-bottom: 0; margin-top: 8px;">
-                * Si no suena solo, ¡haz clic en Play! *
+            <p style="color: #aaa; font-size: 10px; margin-bottom: 0; margin-top: 8px;">
+                * Tema oficial del blog: Childish Gambino - Heartbeat *
             </p>
         </div>
 
         <hr>
 
-        <!-- BOTÓN DE VOLVER -->
         <button id="back-button">⏪ Volver al Board</button>
 
-        <!-- ÍNDICE DE POSTS / BOARDS (ORDENADOS DEL 1 AL 12) -->
         <div id="index-container">
             <h2 id="board-title" style="text-align: center; margin-bottom: 20px;">~* Todos los Posts *~</h2>
             <ul class="index-list">
-                <!-- r9k -->
-                <li data-board="r9k"><a href="#/r9k/1"><span class="board-tag">/r9k/</span> 1. NATALIA NO SE CALLA 🗣️ (14/09/2007)</a></li>
-                <!-- b -->
-                <li data-board="b"><a href="#/b/2"><span class="board-tag">/b/</span> 2. EL EMOJI DEL TUBÉRCULO COMESTIBLE 🥔🍠 (18/09/2007)</a></li>
-                <!-- an -->
-                <li data-board="an"><a href="#/an/3"><span class="board-tag">/an/</span> 3. LA TRAGEDIA DE LA AVISPA (APLOF) 🐝💥 (22/09/2007)</a></li>
-                <!-- r9k -->
-                <li data-board="r9k"><a href="#/r9k/4"><span class="board-tag">/r9k/</span> 4. ¡ARRIBA! (En la parra total) 🙄 (26/09/2007)</a></li>
-                <!-- an -->
-                <li data-board="an"><a href="#/an/5"><span class="board-tag">/an/</span> 5. MIAU Y GUAU🐾 (02/10/2007)</a></li>
-                <!-- r9k -->
-                <li data-board="r9k"><a href="#/r9k/6"><span class="board-tag">/r9k/</span> 6. LAS UÑAS (El pulso de rata fría) 💅🐀 (08/10/2007)</a></li>
-                <!-- b -->
-                <li data-board="b"><a href="#/b/7"><span class="board-tag">/b/</span> 7. LA PUERTA CRUJE Y... PINTURA 🚪🎨 (15/10/2007)</a></li>
-                <!-- an -->
-                <li data-board="an"><a href="#/an/8"><span class="board-tag">/an/</span> 8. ORCA MEOW 🐋🐱 (21/10/2007)</a></li>
-                <!-- soc -->
-                <li data-board="soc"><a href="#/soc/9"><span class="board-tag">/soc/</span> 9. TIRITIRITIRI 📞 (28/10/2007)</a></li>
-                <!-- mu -->
-                <li data-board="mu"><a href="#/mu/10"><span class="board-tag">/mu/</span> 10. HEARTBEAT 💔🎵 (05/11/2007)</a></li>
-                <!-- an -->
-                <li data-board="an"><a href="#/an/11"><span class="board-tag">/an/</span> 11. MORE FURRY SHIT 🦊🐺 (10/11/2007)</a></li>
-                <!-- r9k -->
-                <li data-board="r9k"><a href="#/r9k/12"><span class="board-tag">/r9k/</span> 12. EL VUELO DEL TAPÓN DEL BOLI 🖊️🚀 (15/11/2007)</a></li>
+                <li data-board="r9k"><a href="#/r9k/1"><span class="board-tag">/r9k/</span> 1. NATALIA NO SE CALLA 🗣️ (14/09/2026)</a></li>
+                <li data-board="b"><a href="#/b/2"><span class="board-tag">/b/</span> 2. EL EMOJI DEL TUBÉRCULO COMESTIBLE 🥔🍠 (18/09/2026)</a></li>
+                <li data-board="an"><a href="#/an/3"><span class="board-tag">/an/</span> 3. LA TRAGEDIA DE LA AVISPA (APLOF) 🐝💥 (22/09/2026)</a></li>
+                <li data-board="r9k"><a href="#/r9k/4"><span class="board-tag">/r9k/</span> 4. ¡ARRIBA! (En la parra total) 🙄 (26/09/2026)</a></li>
+                <li data-board="an"><a href="#/an/5"><span class="board-tag">/an/</span> 5. MIAU Y GUAU🐾 (02/10/2026)</a></li>
+                <li data-board="r9k"><a href="#/r9k/6"><span class="board-tag">/r9k/</span> 6. LAS UÑAS (El pulso de rata fría) 💅🐀 (08/10/2026)</a></li>
+                <li data-board="b"><a href="#/b/7"><span class="board-tag">/b/</span> 7. LA PUERTA CRUJE Y... PINTURA 🚪🎨 (15/10/2026)</a></li>
+                <li data-board="an"><a href="#/an/8"><span class="board-tag">/an/</span> 8. ORCA MEOW 🐋🐱 (21/10/2026)</a></li>
+                <li data-board="soc"><a href="#/soc/9"><span class="board-tag">/soc/</span> 9. TIRITIRITIRI 📞 (28/10/2026)</a></li>
+                <li data-board="mu"><a href="#/mu/10"><span class="board-tag">/mu/</span> 10. HEARTBEAT 💔🎵 (05/11/2026)</a></li>
+                <li data-board="an"><a href="#/an/11"><span class="board-tag">/an/</span> 11. MORE FURRY SHIT 🦊🐺 (10/11/2026)</a></li>
+                <li data-board="r9k"><a href="#/r9k/12"><span class="board-tag">/r9k/</span> 12. EL VUELO DEL TAPÓN DEL BOLI 🖊️🚀 (15/11/2026)</a></li>
             </ul>
         </div>
 
-        <!-- CONTENEDOR DE POSTS (ORDENADOS DEL 1 AL 12) -->
+        <div id="guestbook-section" style="display: none;">
+            <h2 style="text-align: center; margin-bottom: 15px;">📖 ~* Libro de Visitas *~ 📖</h2>
+            
+            <div class="gb-form">
+                <h3 style="color: #FF00FF; margin-top: 0; font-size: 1em;">✍️ Deja tu firma / mensaje:</h3>
+                <form id="gb-submit-form" onsubmit="addGuestbookEntry(event)">
+                    <div>
+                        <label for="gb-name">Tu Nick / Nombre:</label>
+                        <input type="text" id="gb-name" placeholder="Ej: xX_EmoBoy_2026_Xx" required maxlength="30">
+                    </div>
+                    <div>
+                        <label for="gb-message">Mensaje / Firma:</label>
+                        <textarea id="gb-message" rows="3" placeholder="¡Escribe algo guapo! (xD, :P, O.o)" required maxlength="250"></textarea>
+                    </div>
+                    <button type="submit" class="btn-retro" style="width: 100%; padding: 8px; font-size: 1em;">✨ Publicar en el Libro de Visitas ✨</button>
+                </form>
+            </div>
+
+            <h3 style="color: #00FFFF; border-bottom: 1px dashed #00FFFF; padding-bottom: 5px;">Firmas Recientes:</h3>
+            <div id="gb-entries-list"></div>
+        </div>
+
         <div id="posts-container">
-            <!-- /r9k/ -->
             <div class="blog-post" id="post-1" data-board="r9k">
                 <h2>1. NATALIA NO SE CALLA 🗣️</h2>
-                <div class="date">Escrito el 14 de Septiembre de 2007 en /r9k/</div>
+                <div class="date">Escrito el 14 de Septiembre de 2026 en /r9k/</div>
                 <p>De verdad os lo digo, es físicamente imposible. Natalia tiene un motor en la mandíbula o algo. Empieza a hablar en la primera hora y cuando toca el timbre del recreo SIGUE HABLANDO. <span class="blink" style="color: #FF00FF;">¡QUE ALGUIEN LE DÉ AL BOTÓN DE MUTE POR FAVOR!</span> xDDDD</p>
             </div>
 
-            <!-- /b/ -->
             <div class="blog-post" id="post-2" data-board="b">
                 <h2>2. EL EMOJI DEL TUBÉRCULO COMESTIBLE 🥔🍠</h2>
-                <div class="date">Escrito el 18 de Septiembre de 2007 en /b/</div>
+                <div class="date">Escrito el 18 de Septiembre de 2026 en /b/</div>
                 <p>Aún no sé cómo llegamos a esto, pero el emoji del tubérculo es sagrado. ¿Es una patata? ¿Es un boniato? ¡NO IMPORTA! Es nuestro dios ahora. Alabado sea el tubérculo comestible. 🥔🛐</p>
             </div>
 
-            <!-- /an/ -->
             <div class="blog-post" id="post-3" data-board="an">
                 <h2>3. LA TRAGEDIA DE LA AVISPA (APLOF) 🐝💥</h2>
-                <div class="date">Escrito el 22 de Septiembre de 2007 en /an/</div>
+                <div class="date">Escrito el 22 de Septiembre de 2026 en /an/</div>
                 <p>Estaba la pobre avispa en la ventana. Todos pensábamos: "¡Vuela libre, pequeña! ¡Alcanza el cielo!". Empezó a mover las alas con furia, se preparó para el despegue y de repente, en vez de subir... fue directa al suelo. <br><br>
                 <span style="color: #FF00FF; font-size: 2em; font-weight: bold;">APLOF.</span><br><br> 
                 Aún me río solo de acordarme. RIP Avispa, no eras la más lista del panal.</p>
             </div>
 
-            <!-- /r9k/ -->
             <div class="blog-post" id="post-4" data-board="r9k">
                 <h2>4. ¡ARRIBA! (En la parra total) 🙄</h2>
-                <div class="date">Escrito el 26 de Septiembre de 2007 en /r9k/</div>
+                <div class="date">Escrito el 26 de Septiembre de 2026 en /r9k/</div>
                 <p>Estábamos en clase de informática. La seño dice: "Mirad <strong>arriba</strong> en el Word" (para el menú de herramientas). Mi compañera me mira y yo... YO ESTABA MIRANDO LITERALMENTE AL TECHO DE LA CLASE. Estaba en la inopia. En modo APLOF total. Tierra trágame.</p>
             </div>
 
-            <!-- /an/ -->
             <div class="blog-post" id="post-5" data-board="an">
                 <h2>5. MIAU Y GUAU🐾</h2>
-                <div class="date">Escrito el 2 de Octubre de 2007 en /an/</div>
+                <div class="date">Escrito el 2 de Octubre de 2026 en /an/</div>
                 <p>Ya no digo "Wow". Ahora todo es "Miau". La Natalia, una vez se le ocurrio decir WOW, pero yo el mas igneioso del mundo voy y le respondo MEOW, (Ella a la primera no lo pillo). EN CUANTO SE DIO CUENTA SE EMPEZO A DESCOGONAR... <span class="blink" style="color: #00FFFF;">MEOW</span> (Natalia sigue sin callarse)</p>
             </div>
 
-            <!-- /r9k/ -->
             <div class="blog-post" id="post-6" data-board="r9k">
                 <h2>6. LAS UÑAS (El pulso de rata fría) 💅🐀</h2>
-                <div class="date">Escrito el 8 de Octubre de 2007 en /r9k/</div>
+                <div class="date">Escrito el 8 de Octubre de 2026 en /r9k/</div>
                 <p>Contexto: Me he pintado las uñas de negro por PRIMERA VEZ. El problema es que tengo el pulso de una <em>rata fría</em> 🥶. Literalmente temblaba. Parecía que me había pintado con alquitrán. Y por supuesto... NATALIA SE RÍE DE MÍ. (Aunque no ha parado de hablar mientras se reía, obvio).</p>
             </div>
 
-            <!-- /b/ -->
             <div class="blog-post" id="post-7" data-board="b">
                 <h2>7. LA PUERTA CRUJE Y... PINTURA 🚪🎨</h2>
-                <div class="date">Escrito el 15 de Octubre de 2007 en /b/</div>
+                <div class="date">Escrito el 15 de Octubre de 2026 en /b/</div>
                 <p>Silencio tenso... de repente la puerta hace *CRRRRJJJ* y alguien grita PINTURA. No trates de entenderlo, si estuviste allí, lo sabes. El surrealismo nos persigue.</p>
             </div>
 
-            <!-- /an/ -->
             <div class="blog-post" id="post-8" data-board="an">
                 <h2>8. ORCA MEOW 🐋🐱</h2>
-                <div class="date">Escrito el 21 de Octubre de 2007 en /an/</div>
+                <div class="date">Escrito el 21 de Octubre de 2026 en /an/</div>
                 <p>La evolución definitiva. Ni perro, ni gato, ni delfín. <strong>ORCA MEOW.</strong> Es un concepto, es un estilo de vida. (Sí, estamos perdiendo la cabeza). O.O</p>
             </div>
 
-            <!-- /soc/ -->
             <div class="blog-post" id="post-9" data-board="soc">
                 <h2>9. TIRITIRITIRI 📞</h2>
-                <div class="date">Escrito el 28 de Octubre de 2007 en /soc/</div>
+                <div class="date">Escrito el 28 de Octubre de 2026 en /soc/</div>
                 <p>¿Sabes el mítico anuncio de Línea Directa? Pues un día me acerqué a la oreja de Natalia, completamente de la nada y le susurré: <span class="blink" style="color: cyan; font-size: 1.5em;">TIRITIRITIRI</span>. Se ha quedado como la broma interna más legendaria. Ahora la uso para interrumpirla cuando no se calla (spoiler: no funciona).</p>
             </div>
 
-            <!-- /mu/ -->
             <div class="blog-post" id="post-10" data-board="mu">
                 <h2>10. HEARTBEAT 💔🎵</h2>
-                <div class="date">Escrito el 5 de Noviembre de 2007 en /mu/</div>
+                <div class="date">Escrito el 5 de Noviembre de 2026 en /mu/</div>
                 <p>Le pegué fuertísimo la canción de <em>Heartbeat</em> de Childish Gambino. Ahora es nuestro himno. Suena en mi cabeza 24/7. (Mentira, ¡pero viaja en el tiempo con nosotros!).</p>
             </div>
 
-            <!-- /an/ -->
             <div class="blog-post" id="post-11" data-board="an">
                 <h2>11. MORE FURRY SHIT 🦊🐺</h2>
-                <div class="date">Escrito el 10 de Noviembre de 2007 en /an/</div>
+                <div class="date">Escrito el 10 de Noviembre de 2026 en /an/</div>
                 <p>Solo voy a decir esto: MORE. FURRY. SHIT. La madriguera del conejo (o del michu) es muy profunda. ¡Que el espíritu animal nos guíe!</p>
             </div>
 
-            <!-- /r9k/ -->
             <div class="blog-post" id="post-12" data-board="r9k">
                 <h2>12. EL VUELO DEL TAPÓN DEL BOLI 🖊️🚀</h2>
-                <div class="date">Escrito el 15 de Noviembre de 2007 en /r9k/</div>
+                <div class="date">Escrito el 15 de Noviembre de 2026 en /r9k/</div>
                 <p>Examen importantísimo. Silencio sepulcral. Tensión. De repente, aprieto demasiado el boli y... <strong>¡FIIIIIIUUUUUU!</strong> EL TAPÓN SALIÓ VOLANDO POR TODA LA CLASE. Cruzó el cielo como un meteorito de plástico. La cara del profesor fue un poema. ¡¡VOLÓ!!</p>
             </div>
         </div>
@@ -442,24 +647,67 @@
         <hr>
 
         <div class="footer-center">
-            <h3>¡Gracias por visitar! Eres el visitante número:</h3>
-            <div id="counter-display" class="hit-counter">
-                0 4 2 0 6 9
+            <h3 style="color: #00FFFF; font-size: 1em; margin-bottom: 5px;">¡Gracias por visitar! Eres el visitante número:</h3>
+            
+            <div class="hit-counter-wrapper">
+                <div id="counter-display" class="hit-counter">042069</div>
             </div>
-            <p><a href="#/home/">Firmar Libro de Visitas</a> | <a href="#/home/">Ver Libro de Visitas</a> | <a href="#/an/">Webring de Furros y Tubérculos</a></p>
+
+            <p style="margin-top: 20px;">
+                <a href="#/guestbook/" onclick="navigateToGuestbook('form')">✍️ Firmar Libro de Visitas</a> | 
+                <a href="#/guestbook/" onclick="navigateToGuestbook('view')">📖 Ver Libro de Visitas</a> | 
+                <a href="javascript:void(0)" onclick="openWebringModal()">🌐 Webring de Furros y Tubérculos</a>
+            </p>
+
+            <div class="badge-container">
+                <span class="badge-btn">800x600 SAFE</span>
+                <span class="badge-btn">MADE WITH NOTEPAD</span>
+                <span class="badge-btn">NETSCAPE 4.0</span>
+                <span class="badge-btn" style="color: #FF00FF; border-color: #FF00FF;">NO TO IE6</span>
+            </div>
+
             <br>
-            <p style="font-size: 0.8em; color: gray;">Mejor visto en resolución 800x600 con un módem de 56k.</p>
+            <p style="font-size: 0.75em; color: #777;">Mejor visto en resolución 800x600 con un módem de 56k. © 2026 Meow.Blog Space.</p>
         </div>
 
     </div>
     
-    <!-- MENÚ INFERIOR 4CHAN -->
     <div class="chan-nav" style="margin-top: 20px;">
-        [ <a href="#/home/">home</a> / <a href="#/b/">b</a> / <a href="#/r9k/">r9k</a> / <a href="#/an/">an</a> / <a href="#/mu/">mu</a> / <a href="#/soc/">soc</a> ]
+        [ <a href="#/home/">home</a> / <a href="#/b/">b</a> / <a href="#/r9k/">r9k</a> / <a href="#/an/">an</a> / <a href="#/mu/">mu</a> / <a href="#/soc/">soc</a> / <a href="#/guestbook/">guestbook</a> ]
+    </div>
+
+    <div id="webring-modal" class="modal-overlay" onclick="closeWebringModal(event)">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeWebringModalDirect()">&times;</span>
+            <h2 style="margin-top:0; color:#FF00FF;">🌐 Webring 2026: Furros & Tubérculos</h2>
+            <p style="font-size: 0.85em; color:#ccc;">Páginas aliadas del circuito Emo/Scene & Tubérculos Unidos:</p>
+            
+            <div class="webring-grid">
+                <div class="webring-item">
+                    <strong style="color:#00FFFF;">🥔 PatataZone.net</strong>
+                    <p style="margin:5px 0 0 0; color:#aaa;">El foro supremo del boniato y la patata frita.</p>
+                </div>
+                <div class="webring-item">
+                    <strong style="color:#FF00FF;">🐾 KingdomOfMeow</strong>
+                    <p style="margin:5px 0 0 0; color:#aaa;">Fotos de gatitos emo con flequillo y glitter.</p>
+                </div>
+                <div class="webring-item">
+                    <strong style="color:#00FFFF;">⚡ DarkScene07</strong>
+                    <p style="margin:5px 0 0 0; color:#aaa;">Layouts gratis para Fotolog y MySpace.</p>
+                </div>
+                <div class="webring-item">
+                    <strong style="color:#FF00FF;">🐝 AplofAvispa.org</strong>
+                    <p style="margin:5px 0 0 0; color:#aaa;">Tributo a los insectos torpes del mundo.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <button class="btn-retro" onclick="closeWebringModalDirect()">Cerrar Webring</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // --- SISTEMA DE ENRUTAMIENTO SPA ESTILO 4CHAN ---
         const boardNames = {
             'b': 'Random',
             'r9k': 'Cosas de clase / Personales',
@@ -469,31 +717,38 @@
         };
 
         function router() {
-            // Obtenemos el hash sin el '#' inicial. Ej: /b/ o /b/2
             const hash = window.location.hash.substring(1) || '/home/';
             const parts = hash.split('/').filter(Boolean);
             
-            // Ocultamos todo por defecto
-            document.getElementById('index-container').style.display = 'none';
-            document.getElementById('back-button').style.display = 'none';
-            
+            const indexContainer = document.getElementById('index-container');
+            const guestbookSection = document.getElementById('guestbook-section');
+            const backBtn = document.getElementById('back-button');
             const allPosts = document.querySelectorAll('.blog-post');
-            allPosts.forEach(post => post.style.display = 'none');
-            
             const allListItems = document.querySelectorAll('.index-list li');
+
+            indexContainer.style.display = 'none';
+            guestbookSection.style.display = 'none';
+            backBtn.style.display = 'none';
+            allPosts.forEach(post => post.style.display = 'none');
             allListItems.forEach(li => li.style.display = 'none');
 
-            // Lógica de Vistas
+            document.querySelectorAll('.chan-nav a').forEach(a => a.classList.remove('active-link'));
+
             if (parts.length === 0 || parts[0] === 'home') {
-                // VISTA HOME: Muestra todos los posts mezclados
-                document.getElementById('index-container').style.display = 'block';
+                indexContainer.style.display = 'block';
                 document.getElementById('board-title').innerText = '~* Todos los Posts *~';
                 allListItems.forEach(li => li.style.display = 'block');
+                document.querySelectorAll('#nav-home').forEach(el => el.classList.add('active-link'));
             } 
+            else if (parts[0] === 'guestbook') {
+                guestbookSection.style.display = 'block';
+                renderGuestbook();
+                document.querySelectorAll('#nav-guestbook').forEach(el => el.classList.add('active-link'));
+                window.scrollTo({ top: 200, behavior: 'smooth' });
+            }
             else if (parts.length === 1 && boardNames[parts[0]]) {
-                // VISTA BOARD INDEX (Ej: /b/): Muestra índice filtrado
                 const board = parts[0];
-                document.getElementById('index-container').style.display = 'block';
+                indexContainer.style.display = 'block';
                 document.getElementById('board-title').innerText = `~* /${board}/ - ${boardNames[board]} *~`;
                 
                 allListItems.forEach(li => {
@@ -501,40 +756,111 @@
                         li.style.display = 'block';
                     }
                 });
+
+                const navEl = document.getElementById(`nav-${board}`);
+                if (navEl) navEl.classList.add('active-link');
             }
             else if (parts.length === 2 && boardNames[parts[0]]) {
-                // VISTA POST (Ej: /b/2): Muestra un post específico
                 const board = parts[0];
                 const postId = parts[1];
                 const post = document.getElementById('post-' + postId);
                 
                 if (post) {
                     post.style.display = 'block';
-                    
-                    // Configurar el botón de volver para ir al board padre
-                    const backBtn = document.getElementById('back-button');
                     backBtn.innerText = `⏪ Volver a /${board}/`;
                     backBtn.onclick = () => { window.location.hash = `/${board}/`; };
                     backBtn.style.display = 'block';
                     
-                    window.scrollTo({ top: 250, behavior: 'smooth' });
+                    window.scrollTo({ top: 220, behavior: 'smooth' });
                 } else {
-                    // Si el post no existe, ir a home
                     window.location.hash = '/home/';
                 }
             } else {
-                // Fallback (URL inválida)
                 window.location.hash = '/home/';
             }
         }
 
-        // Detectar cambios en la URL (al hacer clic en un enlace con hash)
         window.addEventListener('hashchange', router);
-        // Ejecutar router inicial al cargar
         window.addEventListener('load', router);
 
+        const defaultGB = [
+            { name: "xX_Emo_Girl_25_Xx", message: "m3 3nc4nt4 tu bl0g!! N4t4l14 k4ll4t3 y4 xD <333", date: "16/09/2026 18:42" },
+            { name: "PatataLover_2026", message: "ALABADO SEA EL TUBERCULO COMESTIBLE 🥔🥔🥔", date: "20/09/2026 21:15" },
+            { name: "FurryWarrior", message: "Meow meow, gran espacio amigx!! Te agrego a mi top 8!!", date: "05/10/2026 14:02" }
+        ];
 
-        // --- SISTEMA DEL CONTADOR DE VISITAS (LOCALSTORAGE) ---
+        function getGuestbookEntries() {
+            const data = localStorage.getItem('meowBlogGuestbook');
+            if (!data) {
+                localStorage.setItem('meowBlogGuestbook', JSON.stringify(defaultGB));
+                return defaultGB;
+            }
+            try {
+                return JSON.parse(data);
+            } catch (e) {
+                return defaultGB;
+            }
+        }
+
+        function renderGuestbook() {
+            const entries = getGuestbookEntries();
+            const container = document.getElementById('gb-entries-list');
+            
+            if (entries.length === 0) {
+                container.innerHTML = `<div class="empty-gb">Aún no hay firmas. ¡Sé el primero en firmar!</div>`;
+                return;
+            }
+
+            container.innerHTML = entries.map(e => `
+                <div class="gb-entry">
+                    <div class="gb-entry-header">
+                        <span class="gb-entry-author">👤 ${escapeHTML(e.name)}</span>
+                        <span>📅 ${escapeHTML(e.date)}</span>
+                    </div>
+                    <div class="gb-entry-body">${escapeHTML(e.message)}</div>
+                </div>
+            `).join('');
+        }
+
+        function addGuestbookEntry(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('gb-name');
+            const msgInput = document.getElementById('gb-message');
+            
+            const name = nameInput.value.trim();
+            const message = msgInput.value.trim();
+
+            if (!name || !message) return;
+
+            const now = new Date();
+            const dateStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/2026 ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+            const entries = getGuestbookEntries();
+            entries.unshift({ name, message, date: dateStr });
+
+            localStorage.setItem('meowBlogGuestbook', JSON.stringify(entries));
+
+            nameInput.value = '';
+            msgInput.value = '';
+
+            renderGuestbook();
+        }
+
+        function navigateToGuestbook(action) {
+            window.location.hash = '/guestbook/';
+            if (action === 'form') {
+                setTimeout(() => {
+                    document.getElementById('gb-name').focus();
+                }, 100);
+            }
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
         function updateHitCounter() {
             let currentHits = localStorage.getItem('myspaceHits');
             if (!currentHits) {
@@ -543,54 +869,67 @@
                 currentHits = parseInt(currentHits, 10) + 1;
             }
             localStorage.setItem('myspaceHits', currentHits);
-            let formattedHits = currentHits.toString().padStart(6, '0').split('').join(' ');
+            let formattedHits = currentHits.toString().padStart(6, '0');
             document.getElementById('counter-display').innerText = formattedHits;
         }
         updateHitCounter();
 
+        function toggleAudio() {
+            const audio = document.getElementById('bg-audio');
+            const btn = document.getElementById('audio-toggle-btn');
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btn.innerText = '⏸ PAUSE';
+                }).catch(() => {
+                    btn.innerText = '▶ PLAY';
+                });
+            } else {
+                audio.pause();
+                btn.innerText = '▶ PLAY';
+            }
+        }
 
-        // --- SISTEMA DE CURSOR ESTILO SCENE 2007 ---
+        function restartAudio() {
+            const audio = document.getElementById('bg-audio');
+            audio.currentTime = 0;
+            audio.play();
+            document.getElementById('audio-toggle-btn').innerText = '⏸ PAUSE';
+        }
+
+        function openWebringModal() {
+            document.getElementById('webring-modal').classList.add('active');
+        }
+
+        function closeWebringModal(e) {
+            if (e.target.id === 'webring-modal') {
+                document.getElementById('webring-modal').classList.remove('active');
+            }
+        }
+
+        function closeWebringModalDirect() {
+            document.getElementById('webring-modal').classList.remove('active');
+        }
+
         document.addEventListener('mousemove', function(e) {
-            if (Math.random() > 0.3) return;
+            if (Math.random() > 0.35) return;
 
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             
-            // Símbolos Emo/Scene obligatorios
-            const symbols = ['★', '🖤', '☆', 'x', '♥'];
-            const colors = ['#FF00FF', '#000000']; // Solo fucsia y negro
+            const symbols = ['★', '🖤', '☆', 'x', '♥', '✦'];
+            const colors = ['#FF00FF', '#00FFFF', '#ffffff'];
             
-            const randomType = Math.floor(Math.random() * symbols.length);
-            sparkle.textContent = symbols[randomType];
+            sparkle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
             sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
-            
-            sparkle.style.left = (e.clientX - 10 + Math.random() * 20) + 'px';
-            sparkle.style.top = (e.clientY - 10 + Math.random() * 20) + 'px';
+            sparkle.style.left = (e.clientX - 10 + (Math.random() * 16 - 8)) + 'px';
+            sparkle.style.top = (e.clientY - 10 + (Math.random() * 16 - 8)) + 'px';
             
             document.body.appendChild(sparkle);
 
-            // Destruir tras 1 segundo exacto
             setTimeout(() => {
                 sparkle.remove();
-            }, 1000);
+            }, 900);
         });
-
-
-        // --- SISTEMA DE RECARGA AUTOMÁTICA AL DETECTAR CAMBIOS (LIVE RELOAD) ---
-        let ultimaModificacion = null;
-        setInterval(() => {
-            fetch(window.location.href, { method: 'HEAD', cache: 'no-store' })
-                .then(respuesta => {
-                    const modificacionActual = respuesta.headers.get('Last-Modified');
-                    // Si hay un registro previo y la fecha del servidor es diferente, recarga
-                    if (ultimaModificacion && modificacionActual && ultimaModificacion !== modificacionActual) {
-                        window.location.reload();
-                    }
-                    ultimaModificacion = modificacionActual;
-                })
-                .catch(() => {}); // Ignora errores temporales
-        }, 3000); 
-
     </script>
 </body>
 </html>
