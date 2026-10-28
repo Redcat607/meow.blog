@@ -770,54 +770,21 @@
         window.addEventListener('hashchange', router);
         window.addEventListener('load', router);
 
-        const defaultGB = [
-            { name: "xX_Emo_Girl_25_Xx", message: "m3 3nc4nt4 tu bl0g!! N4t4l14 k4ll4t3 y4 xD <333", date: "16/09/2026 18:42" },
-            { name: "PatataLover_2026", message: "ALABADO SEA EL TUBERCULO COMESTIBLE 🥔🥔🥔", date: "20/09/2026 21:15" },
-            { name: "FurryWarrior", message: "Meow meow, gran espacio amigx!! Te agrego a mi top 8!!", date: "05/10/2026 14:02" }
-        ];
+        // --- SHEETDB CLOUD INTEGRATION ---
+        const SHEET_API_URL = 'https://sheetdb.io/api/v1/7rcdcjkxt0bpg';
 
-        function getGuestbookEntries() {
-            const stored = localStorage.getItem('meow_blog_guestbook');
-            if (!stored) {
-                localStorage.setItem('meow_blog_guestbook', JSON.stringify(defaultGB));
-                return defaultGB;
-            }
+        async function getGuestbookEntries() {
             try {
-                return JSON.parse(stored);
-            } catch (e) {
-                return defaultGB;
+                const response = await fetch(SHEET_API_URL);
+                const data = await response.json();
+                return data.reverse(); // Invertir para ver los más recientes arriba
+            } catch (error) {
+                console.error("Error al cargar el libro de visitas desde la nube:", error);
+                return [];
             }
         }
 
-        function saveGuestbookEntries(entries) {
-            localStorage.setItem('meow_blog_guestbook', JSON.stringify(entries));
-        }
-
-        function renderGuestbook() {
-            const listEl = document.getElementById('gb-entries-list');
-            const entries = getGuestbookEntries();
-
-            if (entries.length === 0) {
-                listEl.innerHTML = '<div class="empty-gb">Aún no hay firmas. ¡Sé el primero en dejar tu huella!</div>';
-                return;
-            }
-
-            let html = '';
-            entries.forEach(entry => {
-                html += `
-                    <div class="gb-entry">
-                        <div class="gb-entry-header">
-                            <span class="gb-entry-author">🐾 ${escapeHtml(entry.name)}</span>
-                            <span>${escapeHtml(entry.date)}</span>
-                        </div>
-                        <div class="gb-entry-body">${escapeHtml(entry.message)}</div>
-                    </div>
-                `;
-            });
-            listEl.innerHTML = html;
-        }
-
-        function addGuestbookEntry(event) {
+        async function addGuestbookEntry(event) {
             event.preventDefault();
             const nameInput = document.getElementById('gb-name');
             const messageInput = document.getElementById('gb-message');
@@ -831,17 +798,54 @@
                 date: dateStr
             };
 
-            const entries = getGuestbookEntries();
-            entries.unshift(newEntry); // Añadir al principio
-            saveGuestbookEntries(entries);
+            try {
+                await fetch(SHEET_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ data: [newEntry] })
+                });
 
-            nameInput.value = '';
-            messageInput.value = '';
+                nameInput.value = '';
+                messageInput.value = '';
 
-            renderGuestbook();
+                renderGuestbook();
+            } catch (error) {
+                alert("¡Vaya! Hubo un error al enviar tu firma a la nube.");
+                console.error(error);
+            }
+        }
+
+        async function renderGuestbook() {
+            const listEl = document.getElementById('gb-entries-list');
+            listEl.innerHTML = '<div class="empty-gb">Cargando firmas desde la nube... 🐾</div>';
+            
+            const entries = await getGuestbookEntries();
+
+            if (entries.length === 0) {
+                listEl.innerHTML = '<div class="empty-gb">Aún no hay firmas. ¡Sé el primero en dejar tu huella!</div>';
+                return;
+            }
+
+            let html = '';
+            entries.forEach(entry => {
+                html += `
+                    <div class="gb-entry">
+                        <div class="gb-entry-header">
+                            <span class="gb-entry-author">🐾 ${escapeHtml(entry.name || '')}</span>
+                            <span>${escapeHtml(entry.date || '')}</span>
+                        </div>
+                        <div class="gb-entry-body">${escapeHtml(entry.message || '')}</div>
+                    </div>
+                `;
+            });
+            listEl.innerHTML = html;
         }
 
         function escapeHtml(text) {
+            if (!text) return '';
             const map = {
                 '&': '&amp;',
                 '<': '&lt;',
