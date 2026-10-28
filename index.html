@@ -303,19 +303,6 @@
             box-shadow: 0 0 8px #FF00FF;
         }
 
-        .sparkle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 99999;
-            font-size: 1.3em;
-            text-shadow: 0 0 5px #FF00FF;
-            animation: fallAndFade 0.9s linear forwards;
-        }
-        @keyframes fallAndFade {
-            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(35px) scale(0.4) rotate(120deg); opacity: 0; }
-        }
-
         .gb-form {
             background: rgba(25, 25, 25, 0.9);
             border: 2px dashed #FF00FF;
@@ -578,7 +565,7 @@
             <div class="blog-post" id="post-2" data-board="b">
                 <h2>2. EL EMOJI DEL TUBÉRCULO COMESTIBLE 🥔🍠</h2>
                 <div class="date">Escrito el 18 de Septiembre de 2026 en /b/</div>
-                <p>Aún no sé cómo llegamos a esto, pero el emoji del tubérculo es sagrado. ¿Es una patata? ¿Es un boniato? ¡NO IMPORTA! Es nuestro dios ahora. Alabado sea el tubérculo comestible. 🥔🛐</p>
+                <p>Aún no sé cómo llegamos a esto, pero el emoji del tubérculo es sagrado. ¿Es una patata? ¿Es un boniato? ¡NO IMPORTA! Es nosso dios ahora. Alabado sea el tubérculo comestible. 🥔🛐</p>
             </div>
 
             <div class="blog-post" id="post-3" data-board="an">
@@ -654,8 +641,8 @@
             </div>
 
             <p style="margin-top: 20px;">
-                <a href="#/guestbook/" onclick="navigateToGuestbook('form')">✍️ Firmar Libro de Visitas</a> | 
-                <a href="#/guestbook/" onclick="navigateToGuestbook('view')">📖 Ver Libro de Visitas</a> | 
+                <a href="#/guestbook/">✍️ Firmar Libro de Visitas</a> | 
+                <a href="#/guestbook/">📖 Ver Libro de Visitas</a> | 
                 <a href="javascript:void(0)" onclick="openWebringModal()">🌐 Webring de Furros y Tubérculos</a>
             </p>
 
@@ -790,140 +777,124 @@
         ];
 
         function getGuestbookEntries() {
-            const data = localStorage.getItem('meowBlogGuestbook');
-            if (!data) {
-                localStorage.setItem('meowBlogGuestbook', JSON.stringify(defaultGB));
+            const stored = localStorage.getItem('meow_blog_guestbook');
+            if (!stored) {
+                localStorage.setItem('meow_blog_guestbook', JSON.stringify(defaultGB));
                 return defaultGB;
             }
             try {
-                return JSON.parse(data);
+                return JSON.parse(stored);
             } catch (e) {
                 return defaultGB;
             }
         }
 
+        function saveGuestbookEntries(entries) {
+            localStorage.setItem('meow_blog_guestbook', JSON.stringify(entries));
+        }
+
         function renderGuestbook() {
+            const listEl = document.getElementById('gb-entries-list');
             const entries = getGuestbookEntries();
-            const container = document.getElementById('gb-entries-list');
-            
+
             if (entries.length === 0) {
-                container.innerHTML = `<div class="empty-gb">Aún no hay firmas. ¡Sé el primero en firmar!</div>`;
+                listEl.innerHTML = '<div class="empty-gb">Aún no hay firmas. ¡Sé el primero en dejar tu huella!</div>';
                 return;
             }
 
-            container.innerHTML = entries.map(e => `
-                <div class="gb-entry">
-                    <div class="gb-entry-header">
-                        <span class="gb-entry-author">👤 ${escapeHTML(e.name)}</span>
-                        <span>📅 ${escapeHTML(e.date)}</span>
+            let html = '';
+            entries.forEach(entry => {
+                html += `
+                    <div class="gb-entry">
+                        <div class="gb-entry-header">
+                            <span class="gb-entry-author">🐾 ${escapeHtml(entry.name)}</span>
+                            <span>${escapeHtml(entry.date)}</span>
+                        </div>
+                        <div class="gb-entry-body">${escapeHtml(entry.message)}</div>
                     </div>
-                    <div class="gb-entry-body">${escapeHTML(e.message)}</div>
-                </div>
-            `).join('');
+                `;
+            });
+            listEl.innerHTML = html;
         }
 
         function addGuestbookEntry(event) {
             event.preventDefault();
             const nameInput = document.getElementById('gb-name');
-            const msgInput = document.getElementById('gb-message');
-            
-            const name = nameInput.value.trim();
-            const message = msgInput.value.trim();
-
-            if (!name || !message) return;
+            const messageInput = document.getElementById('gb-message');
 
             const now = new Date();
-            const dateStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/2026 ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            const newEntry = {
+                name: nameInput.value.trim(),
+                message: messageInput.value.trim(),
+                date: dateStr
+            };
 
             const entries = getGuestbookEntries();
-            entries.unshift({ name, message, date: dateStr });
-
-            localStorage.setItem('meowBlogGuestbook', JSON.stringify(entries));
+            entries.unshift(newEntry); // Añadir al principio
+            saveGuestbookEntries(entries);
 
             nameInput.value = '';
-            msgInput.value = '';
+            messageInput.value = '';
 
             renderGuestbook();
         }
 
-        function navigateToGuestbook(action) {
-            window.location.hash = '/guestbook/';
-            if (action === 'form') {
-                setTimeout(() => {
-                    document.getElementById('gb-name').focus();
-                }, 100);
-            }
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
         }
 
-        function escapeHTML(str) {
-            return str.replace(/[&<>'"]/g, 
-                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-            );
-        }
-
-        function updateHitCounter() {
-            let currentHits = localStorage.getItem('myspaceHits');
-            if (!currentHits) {
-                currentHits = 42069;
-            } else {
-                currentHits = parseInt(currentHits, 10) + 1;
-            }
-            localStorage.setItem('myspaceHits', currentHits);
-            let formattedHits = currentHits.toString().padStart(6, '0');
-            document.getElementById('counter-display').innerText = formattedHits;
-        }
-        updateHitCounter();
+        // Audio controls
+        const audio = document.getElementById('bg-audio');
+        const audioBtn = document.getElementById('audio-toggle-btn');
 
         function toggleAudio() {
-            const audio = document.getElementById('bg-audio');
-            const btn = document.getElementById('audio-toggle-btn');
             if (audio.paused) {
-                audio.play().then(() => {
-                    btn.innerText = '⏸ PAUSE';
-                }).catch(() => {
-                    btn.innerText = '▶ PLAY';
-                });
+                audio.play();
+                audioBtn.innerText = '⏸ PAUSE';
             } else {
                 audio.pause();
-                btn.innerText = '▶ PLAY';
+                audioBtn.innerText = '▶ PLAY';
             }
         }
 
         function restartAudio() {
-            const audio = document.getElementById('bg-audio');
             audio.currentTime = 0;
             audio.play();
-            document.getElementById('audio-toggle-btn').innerText = '⏸ PAUSE';
+            audioBtn.innerText = '⏸ PAUSE';
         }
 
+        // Webring modal
         function openWebringModal() {
             document.getElementById('webring-modal').classList.add('active');
-        }
-
-        function closeWebringModal(e) {
-            if (e.target.id === 'webring-modal') {
-                document.getElementById('webring-modal').classList.remove('active');
-            }
         }
 
         function closeWebringModalDirect() {
             document.getElementById('webring-modal').classList.remove('active');
         }
 
-        document.addEventListener('mousemove', function(e) {
-            if (Math.random() > 0.35) return;
+        function closeWebringModal(event) {
+            if (event.target === document.getElementById('webring-modal')) {
+                closeWebringModalDirect();
+            }
+        }
 
+        // Sparkle effect on click
+        document.addEventListener('click', function(e) {
+            const symbols = ['✨', '🐾', '💖', '⭐', '🦴'];
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
-            
-            const symbols = ['★', '🖤', '☆', 'x', '♥', '✦'];
-            const colors = ['#FF00FF', '#00FFFF', '#ffffff'];
-            
-            sparkle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-            sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
-            sparkle.style.left = (e.clientX - 10 + (Math.random() * 16 - 8)) + 'px';
-            sparkle.style.top = (e.clientY - 10 + (Math.random() * 16 - 8)) + 'px';
-            
+            sparkle.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            sparkle.style.left = (e.clientX - 10) + 'px';
+            sparkle.style.top = (e.clientY - 10) + 'px';
             document.body.appendChild(sparkle);
 
             setTimeout(() => {
