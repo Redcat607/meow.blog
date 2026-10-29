@@ -519,6 +519,71 @@
             font-style: italic;
             padding: 15px;
         }
+
+        .late-ejection-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.98);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 800ms ease, visibility 800ms ease;
+        }
+
+        .late-ejection-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .late-ejection-flash {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: #fff;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .late-ejection-flash.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .late-ejection-flash.fade-out {
+            opacity: 0;
+            transition: opacity 600ms ease;
+        }
+
+        .late-ejection-message {
+            max-width: 420px;
+            text-align: center;
+            background: #111;
+            border: 2px dashed #FF00FF;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.35);
+        }
+
+        .late-ejection-message h2 {
+            color: #FF00FF;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .late-ejection-overlay,
+            .late-ejection-flash {
+                transition: none;
+            }
+
+            .late-ejection-flash {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -761,6 +826,15 @@
             </div>
         </div>
     </div>
+
+    <div id="late-ejection-overlay" class="late-ejection-overlay" role="dialog" aria-modal="true" aria-labelledby="late-ejection-title">
+        <div class="late-ejection-message">
+            <h2 id="late-ejection-title">¡FUERA DE AQUÍ!</h2>
+            <p>Es muy tarde. Vuelve a dormir, gatito.</p>
+            <button id="late-ejection-reload" class="btn-retro" type="button">Volver a entrar</button>
+        </div>
+    </div>
+    <div id="late-ejection-flash" class="late-ejection-flash" aria-hidden="true"></div>
 
     <script>
         const customCursor = document.getElementById('custom-cursor');
@@ -1025,6 +1099,50 @@
                 closeWebringModalDirect();
             }
         }
+
+        function showLateEjection() {
+            const ejectionOverlay = document.getElementById('late-ejection-overlay');
+            if (ejectionOverlay.classList.contains('active')) return;
+
+            ejectionOverlay.classList.add('active');
+            document.getElementById('late-ejection-reload').focus();
+
+            const flash = document.getElementById('late-ejection-flash');
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                flash.classList.add('active');
+                setTimeout(() => {
+                    flash.classList.add('fade-out');
+                    setTimeout(() => {
+                        flash.classList.remove('active', 'fade-out');
+                    }, 600);
+                }, 1000);
+            }
+        }
+
+        const currentHour = new Date().getHours();
+        if (currentHour >= 2 && currentHour < 5 && Math.random() < 0.01) {
+            setTimeout(() => {
+                showLateEjection();
+            }, 20000 + Math.random() * 100000);
+        }
+
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            document.addEventListener('keydown', (event) => {
+                const target = event.target;
+                const isTyping = target instanceof HTMLElement
+                    && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName));
+
+                if (event.ctrlKey && event.altKey && !event.shiftKey && !event.metaKey
+                    && event.code === 'KeyF' && !isTyping) {
+                    event.preventDefault();
+                    showLateEjection();
+                }
+            });
+        }
+
+        document.getElementById('late-ejection-reload').addEventListener('click', () => {
+            window.location.reload();
+        });
 
     </script>
 </body>
