@@ -281,6 +281,13 @@
             margin-bottom: 20px;
         }
 
+        .gb-device-notice {
+            color: #bbb;
+            font-size: 0.8em;
+            line-height: 1.5;
+            margin: 0 0 14px;
+        }
+
         .gb-form label {
             display: block;
             color: #00FFFF;
@@ -660,6 +667,7 @@
             
             <div class="gb-form">
                 <h3 style="color: #FF00FF; margin-top: 0; font-size: 1em;">✍️ Deja tu firma / mensaje:</h3>
+                <p class="gb-device-notice">Al publicar se guarda automáticamente un identificador de este navegador junto a la firma. Distingue perfiles de navegador, no identifica el ordenador físico ni a una persona, y puede cambiar si borras sus datos. La API del libro es pública, así que el identificador también puede consultarse allí.</p>
                 <form id="gb-submit-form" onsubmit="addGuestbookEntry(event)">
                     <div>
                         <label for="gb-name">Tu Nick / Nombre:</label>
@@ -985,6 +993,40 @@
 
         // --- SHEETDB CLOUD INTEGRATION ---
         const SHEET_API_URL = 'https://sheetdb.io/api/v1/7rcdcjkxt0bpg';
+        const GUESTBOOK_BROWSER_ID_KEY = 'meow.blog.guestbook.browserId';
+
+        function getGuestbookBrowserId() {
+            let storedId;
+            try {
+                storedId = localStorage.getItem(GUESTBOOK_BROWSER_ID_KEY);
+            } catch (error) {
+                console.error('Error al leer el identificador del navegador:', error);
+                throw new Error('No se pudo acceder al almacenamiento de este navegador. Comprueba que esté permitido para este sitio.');
+            }
+
+            if (storedId && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(storedId)) {
+                return storedId;
+            }
+
+            if (!window.crypto || typeof window.crypto.getRandomValues !== 'function') {
+                throw new Error('Este navegador no permite generar un código seguro para identificarlo.');
+            }
+
+            const bytes = window.crypto.getRandomValues(new Uint8Array(16));
+            bytes[6] = (bytes[6] & 0x0f) | 0x40;
+            bytes[8] = (bytes[8] & 0x3f) | 0x80;
+            const hex = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+            const browserId = `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+
+            try {
+                localStorage.setItem(GUESTBOOK_BROWSER_ID_KEY, browserId);
+            } catch (error) {
+                console.error('Error al guardar el identificador del navegador:', error);
+                throw new Error('No se pudo guardar el identificador de este navegador. Comprueba que el almacenamiento del sitio esté permitido.');
+            }
+
+            return browserId;
+        }
 
         async function getGuestbookEntries() {
             try {
@@ -1012,7 +1054,8 @@
             };
 
             try {
-                await fetch(SHEET_API_URL, {
+                newEntry.browser_id = getGuestbookBrowserId();
+                const response = await fetch(SHEET_API_URL, {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -1020,13 +1063,16 @@
                     },
                     body: JSON.stringify({ data: [newEntry] })
                 });
+                if (!response.ok) {
+                    throw new Error(`SheetDB respondió con el estado ${response.status}.`);
+                }
 
                 nameInput.value = '';
                 messageInput.value = '';
 
                 renderGuestbook();
             } catch (error) {
-                alert("¡Vaya! Hubo un error al enviar tu firma a la nube.");
+                alert(`¡Vaya! No se pudo enviar tu firma: ${error.message}`);
                 console.error(error);
             }
         }
