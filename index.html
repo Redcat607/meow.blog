@@ -667,7 +667,7 @@
             
             <div class="gb-form">
                 <h3 style="color: #FF00FF; margin-top: 0; font-size: 1em;">✍️ Deja tu firma / mensaje:</h3>
-                <p class="gb-device-notice">Al publicar se guarda automáticamente un identificador de este navegador junto a la firma. Distingue perfiles de navegador, no identifica el ordenador físico ni a una persona, y puede cambiar si borras sus datos. La API del libro es pública, así que el identificador también puede consultarse allí.</p>
+                <p class="gb-device-notice">Al publicar se guardan junto a la firma un ID aleatorio persistente, una huella de navegador calculada con FingerprintJS y el nombre del navegador detectado. Estos datos pueden ayudar a reconocer el mismo navegador, pero no identifican de forma infalible el ordenador físico ni a una persona. La API del libro es pública, así que también pueden consultarse allí.</p>
                 <form id="gb-submit-form" onsubmit="addGuestbookEntry(event)">
                     <div>
                         <label for="gb-name">Tu Nick / Nombre:</label>
@@ -994,6 +994,18 @@
         // --- SHEETDB CLOUD INTEGRATION ---
         const SHEET_API_URL = 'https://sheetdb.io/api/v1/7rcdcjkxt0bpg';
         const GUESTBOOK_BROWSER_ID_KEY = 'meow.blog.guestbook.browserId';
+        let guestbookVisitorIdPromise;
+
+        async function getGuestbookVisitorId() {
+            if (!guestbookVisitorIdPromise) {
+                guestbookVisitorIdPromise = import('https://openfpcdn.io/fingerprintjs/v4')
+                    .then(FingerprintJS => FingerprintJS.load())
+                    .then(fingerprint => fingerprint.get())
+                    .then(result => result.visitorId);
+            }
+
+            return guestbookVisitorIdPromise;
+        }
 
         function getGuestbookBrowserId() {
             let storedId;
@@ -1047,6 +1059,13 @@
             const now = new Date();
             const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+            const userAgent = navigator.userAgent;
+            let browserName = 'Desconocido';
+            if (userAgent.includes('Edg/')) browserName = 'Edge';
+            else if (userAgent.includes('Firefox/')) browserName = 'Firefox';
+            else if (userAgent.includes('Chrome/')) browserName = 'Chrome';
+            else if (userAgent.includes('Safari/')) browserName = 'Safari';
+
             const newEntry = {
                 name: nameInput.value.trim(),
                 message: messageInput.value.trim(),
@@ -1054,7 +1073,10 @@
             };
 
             try {
-                newEntry.browser_id = getGuestbookBrowserId();
+                newEntry.browserId = getGuestbookBrowserId();
+                newEntry.deviceName = 'Web';
+                newEntry.browser = browserName;
+                newEntry.id = await getGuestbookVisitorId();
                 const response = await fetch(SHEET_API_URL, {
                     method: 'POST',
                     headers: {
