@@ -802,8 +802,8 @@
             <div class="badge-container">
                 <span class="badge-btn">haii</span>
                 <span class="badge-btn">i love NC</span>
-                <span class="badge-btn"></span>
-                <span class="badge-btn" style="color: #FF00FF; border-color: #FF00FF;">NO TO IE6</span>
+                <span class="badge-btn">R607</span>
+                <span class="badge-btn" style="color: #FF00FF; border-color: #FF00FF;">no to paid for MASSIVE</span>
             </div>
 
             <br>
@@ -833,7 +833,7 @@
                     <strong style="color:#FF00FF;">ithinkilikeyou.net</strong>
                 </a>
                 <a class="webring-item" href="https://www.wikifur.com" target="_blank" rel="noopener noreferrer">
-                    <strong style="color:#00FFFF;">WikiFur</strong>
+                    <strong style="color:#00FFFF;">WikiFur.com</strong>
                 </a>
             </div>
 
@@ -956,7 +956,7 @@
                 guestbookSection.style.display = 'block';
                 renderGuestbook();
                 document.querySelectorAll('#nav-guestbook').forEach(el => el.classList.add('active-link'));
-                window.scrollTo({ top: 200, behavior: 'smooth' });
+                guestbookSection.scrollIntoView({ behavior: 'smooth' });
             }
             else if (parts.length === 1 && boardNames[parts[0]]) {
                 const board = parts[0];
@@ -983,7 +983,7 @@
                     backBtn.onclick = () => { window.location.hash = `/${board}/`; };
                     backBtn.style.display = 'block';
                     
-                    window.scrollTo({ top: 220, behavior: 'smooth' });
+                    post.scrollIntoView({ behavior: 'smooth' });
                 } else {
                     window.location.hash = '/home/';
                 }
